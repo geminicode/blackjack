@@ -48,10 +48,17 @@ public class CardTest
 	}
 	
 	@Test
-	public void toStringCheck()
+	public void toStringClubCheck()
 	{
 		Card card = new Card(Suit.Club, Face.Two);
-		assertEquals("Club-2", card.toString());
+		assertEquals(String.format("2%s", '\u2663'), card.toString());
+	}
+	
+	@Test
+	public void toStringHeartCheck()
+	{
+		Card card = new Card(Suit.Heart, Face.Two);
+		assertEquals(String.format("2%s", '\u2665'), card.toString());
 	}
 	
 	@Test

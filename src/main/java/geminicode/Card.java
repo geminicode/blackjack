@@ -2,19 +2,19 @@ package geminicode;
 
 /**
  * Standard Suit for a deck of cards
- * @author devadmin
+ * @author Darrell Fuller
  *
  */
 enum Suit {
-	Club,
-	Spade,
-	Heart,
-	Diamond
+	Club,  // '\u2663'
+	Spade, // '\u2660'
+	Heart, // '\u2665'
+	Diamond // '\u2662'
 }
 
 /**
  * Cards in one suite
- * @author devadmin
+ * @author Darrell Fuller
  *
  */
 enum Face {
@@ -34,6 +34,13 @@ enum Face {
 	Ace
 }
 
+/**
+ * Card in a Deck.  A Card has a Suit (Heart, Spade, etc.) and a Face (Two, Queen, Ace, etc).
+ * There is an associated value for each card.  Face cards are 10.
+ * 
+ * @author Darrell Fuller
+ *
+ */
 public class Card {
 
 	private Suit suit = Suit.Club;
@@ -49,7 +56,7 @@ public class Card {
 		this.value = face.ordinal()+1;  
 		
 		// Face cards are ten
-		if (this.value > Face.Ten.ordinal() && this.value < Face.Ace.ordinal())
+		if ((face == Face.Jack) || (face == Face.Queen) || (face == Face.King))
 			this.value = 10;
 		
 		// Aces are high by default
@@ -57,14 +64,26 @@ public class Card {
 			this.value = 11;
 	}
 
+	/**
+	 * Numerical value of Face of Card.  
+	 * @return
+	 */
 	public int getValue() {
 		return value;
 	}
 
+	/**
+	 * Card Suit (Heart, Spade, etc.)
+	 * @return
+	 */
 	public Suit getSuit() {
 		return suit;
 	}
 
+	/**
+	 * Card Face (Two, Jack, Ace, etc.)
+	 * @return
+	 */
 	public Face getFace() {
 		return face;
 	}
@@ -90,7 +109,22 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return String.format("%s-%s", this.suit, getValue());
+		char s = '\u2663';
+		switch (this.suit)
+		{
+			case Spade:
+				s = '\u2660';
+				break;
+			case Heart:
+				s = '\u2665';
+				break;			
+			case Diamond:
+				s = '\u2662';
+				break;
+			default:
+				break;				
+		}
+		return String.format("%s%s", getValue(), s);
 	}
 	
 }

@@ -4,6 +4,7 @@
 
 * JDK 1.8 or above
 * Maven 3.x or above (Tested with 3.6)
+* Console/Terminal environment supporting UTF-8 (Tested on Linux Mint 19.x, Windows should work as well)
 
 ## Build
 

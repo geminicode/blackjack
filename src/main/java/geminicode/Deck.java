@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 /**
- * A Deck of Cards.  52 Cards of four suits; One through Ace.
+ * A Deck of Cards.  56 Cards of four suits; One through Ace.
  * 
  * Note: No Jokers
  * 
@@ -43,7 +43,7 @@ public class Deck {
 	 * Deal the first card on the deck.
 	 * 
 	 * TBA: Deal from bottom of deck will be add later :)
-	 * @return
+	 * @return top card
 	 */
 	public Card deal()
 	{
@@ -51,8 +51,9 @@ public class Deck {
 	}
 	
 	/**
+	 * Number of cards in the deck.
 	 * 
-	 * @return
+	 * @return number of cards left in the deck
 	 */
 	public int size()
 	{
