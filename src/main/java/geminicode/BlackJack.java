@@ -31,15 +31,18 @@ enum HandStatus {
  */
 public class BlackJack {
 
-	private Deck deck = null;
-	private List<Player> players = new ArrayList<Player>();
-	private Map<Player, HandStatus> playerStatus = new HashMap<Player, HandStatus>();
  	private Scanner in;
+	private Deck deck = null;
+	
+	protected List<Player> players = new ArrayList<Player>();
+	protected Map<Player, HandStatus> playerStatus = new HashMap<Player, HandStatus>();
 	
 	// Commands
 	private static final char CMD_QUIT = 'Q';
 	private static final char CMD_HIT = 'H';
 	private static final char CMD_STAND = 'S';
+	
+	protected static final String DEALER_NAME = "Dealer";
 	
 	/**
 	 * Default Constructor.  Will use System.in for Input Scanner
@@ -63,7 +66,7 @@ public class BlackJack {
 	 * Deal a single card to the specified player
 	 * @param player to deal cards to
 	 */
-	private void dealCard(Player player)
+	protected void dealCard(Player player)
 	{
 		dealCards(player, 1);
 	}
@@ -73,7 +76,7 @@ public class BlackJack {
 	 * @param player to deal cards to
 	 * @param cards to deal out
 	 */
-	private void dealCards(Player player, int cards)
+	protected void dealCards(Player player, int cards)
 	{
 		for (int i=0; i<cards; i++)
 		{
@@ -108,7 +111,7 @@ public class BlackJack {
 			dealCards(player, 2);
 		}
 		
-		Player dealer = new Player("Dealer");
+		Player dealer = new Player(DEALER_NAME);
 		this.players.add(dealer);
 		dealCards(dealer, 2);
 		
