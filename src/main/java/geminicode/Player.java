@@ -23,12 +23,19 @@ public class Player {
 		this.name = name;
 	}
 	
+	/*
+	 * Deal a single card to the Player
+	 */
 	public int hit(Card card)
 	{
 		hand.add(card);
 		return handTotal();
 	}
 	
+	/**
+	 * The numerical, face value of the player's hand.
+	 * @return the hand total
+	 */
 	public int handTotal()
 	{
 		int total = 0;
@@ -39,7 +46,10 @@ public class Player {
 		return total;
 	}
 
-	
+	/**
+	 * Player's name.  Cannot be changed.
+	 * @return the player's name
+	 */
 	public String getName() {
 		return name;
 	}

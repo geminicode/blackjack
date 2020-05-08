@@ -1,13 +1,27 @@
 package geminicode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Status of a Players Hand
+ * @author Darrell Fuller
+ */
 enum HandStatus {
-	Good,
+	/** Player is playing the game */
+	Playing,
+	/** Player is playing the game */
+	Standing,
+	/** Player is holding his hand and current points */
 	BlackJack,
-	Busted
+	/** Player has the highest possible hand */
+	Busted,
+	/** Player has won the game */
+	Winner
 }
 
 /**
@@ -17,48 +31,187 @@ enum HandStatus {
  */
 public class BlackJack {
 
-	private int numPlayers = 2; // Dealer & One Player
 	private Deck deck = null;
-	private boolean playing = false;
 	private List<Player> players = new ArrayList<Player>();
-	private int currentPlayer = 1;
+	private Map<Player, HandStatus> playerStatus = new HashMap<Player, HandStatus>();
+ 	private Scanner in;
 	
+	// Commands
+	private static final char CMD_QUIT = 'Q';
+	private static final char CMD_HIT = 'H';
+	private static final char CMD_STAND = 'S';
+	
+	/**
+	 * Default Constructor.  Will use System.in for Input Scanner
+	 */
 	public BlackJack()
 	{
-		deck = new Deck();
+		this(new Scanner(System.in));
 	}
 	
-	public void initGame(int players)
+	/**
+	 * Create a BlackJack object using passed in input Scanner
+	 * @param input
+	 */
+	public BlackJack(Scanner input)
 	{
-		this.players.add(new Player("Dealer"));
-		
-		for (int i=0; i < players; i++)
+		deck = new Deck();
+		this.in = input;
+	}	
+	
+	/**
+	 * Deal a single card to the specified player
+	 * @param player to deal cards to
+	 */
+	private void dealCard(Player player)
+	{
+		dealCards(player, 1);
+	}
+	
+	/**
+	 * Deal a specified number of cards to a player
+	 * @param player to deal cards to
+	 * @param cards to deal out
+	 */
+	private void dealCards(Player player, int cards)
+	{
+		for (int i=0; i<cards; i++)
 		{
-			this.players.add(new Player(String.format("Player#%s", i+1)));
+			player.hit(deck.deal());
 		}
 		
-		play();
+		if (player.handTotal() >= 21)
+		{
+			if (player.handTotal() == 21)
+				playerStatus.put(player, HandStatus.BlackJack);
+			else
+				playerStatus.put(player, HandStatus.Busted);
+		}
+		else
+		{
+			playerStatus.put(player, HandStatus.Playing);
+		}
 	}
 	
-	protected void play()
+	/**
+	 * Create the appropriate number of players as well as the dealer.
+	 * Deal each player two (2) cards.
+	 * 
+	 * @param players that are in the game
+	 */
+	public void initGame(int players)
 	{
-		showPlayers();
-		showMenu();
+		for (int i=0; i < players; i++)
+		{
+			Player player = new Player(String.format("Player#%s", i+1));
+			this.players.add(player);
+			dealCards(player, 2);
+		}
+		
+		Player dealer = new Player("Dealer");
+		this.players.add(dealer);
+		dealCards(dealer, 2);
+		
+		try
+		{
+			play();
+		}
+		catch(java.util.NoSuchElementException e)
+		{
+			// Determine the winner.
+			if (playerStatus.get(dealer) == HandStatus.BlackJack)
+			{
+				// House always wins
+				playerStatus.put(dealer, HandStatus.Winner);
+			}
+			else
+			{
+				// Default winner to Dealer since he gets the "push", but he can't be busted.
+				int wintotal = (playerStatus.get(dealer) != HandStatus.Busted)?dealer.handTotal():0;
+				Player winner = dealer;
+				for (Player p : this.players)
+				{
+					if (p.handTotal() > wintotal && playerStatus.get(p) != HandStatus.Busted)
+					{
+						winner = p;
+					}
+				}
+				playerStatus.put(winner, HandStatus.Winner);
+			}
+			
+			showPlayers(dealer);
+			
+			log("\n\nGame is over!\n");
+		}
+		catch(Exception e)
+		{
+			log(String.format("Unexpected Error: %s", e.getMessage()));
+		}
 	}
 	
-	protected void showPlayers()
+	/**
+	 * Play the BlackJack Game
+	 * @throws RuntimeException
+	 */
+	protected void play() throws RuntimeException
+	{
+		char cmd;
+		Iterator<Player> nextPlayer = players.iterator();
+		Player player = nextPlayer.next();
+		do {
+			showPlayers(player);
+			showMenu(player);
+			cmd = in.next().toUpperCase().charAt(0);
+			switch(cmd)
+			{
+			case CMD_HIT:
+				dealCard(player);
+				if (player.handTotal() >= 21)
+				{
+					player = nextPlayer.next();
+				}
+				break;
+			case CMD_STAND:
+				playerStatus.put(player, HandStatus.Standing);
+				player = nextPlayer.next();
+				break;
+			case CMD_QUIT:
+				log("Thank you for playing!\n\n");
+				break;
+			default:
+				log(String.format("Invalid Command: %s", cmd));
+				break;
+			}
+
+		} while (cmd != CMD_QUIT );
+		
+	}
+	
+	/**
+	 * Show all the players and their hands
+	 * @param currentPlayer is annotated in list.
+	 */
+	protected void showPlayers(Player currentPlayer)
 	{
 		for (Player p : players)
 		{
-			log(String.format("%s\n", p.showHand()));
+			log(String.format("%s (%s) %s\n", (p.equals(currentPlayer))?"->":"..", playerStatus.get(p),  p.showHand()));
 		}
 	}
 	
-	protected void showMenu()
+	/**
+	 * Display Game Menu
+	 * @param currentPlayer displayed in the menu
+	 */
+	protected void showMenu(Player currentPlayer)
 	{
-		log(String.format("\n\n\n\nPlayer Turn: %s Actions: [H]it [S]tand", players.get(this.currentPlayer) ));
+		log(String.format("\n\n\n\nPlayer %s Turn: [H]it [S]tand [Q]uit : ", currentPlayer ));
 	}
 	
+	/**
+	 * Print a message to STDOUT
+	 * @param message to print
+	 */
 	public static void log(String message)
 	{
 		System.out.print(message);
@@ -89,11 +242,12 @@ public class BlackJack {
 			}
 			log(String.format("Starting Game with %s Players\n", numPlayers));
 			
-			BlackJack game = new BlackJack();
+			BlackJack game = new BlackJack(in);
 			game.initGame(numPlayers);
 			
 			break;
 		}
+		in.close();
 	}
 
 }

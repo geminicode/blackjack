@@ -1,10 +1,56 @@
 # blackjack
 
+## Overview
+
 ## Requirements
 
-* JDK 1.8 or above
+## Dependencies
+
+* JDK 1.8 or above (Tested with OpenJDK 11)
 * Maven 3.x or above (Tested with 3.6)
 * Console/Terminal environment supporting UTF-8 (Tested on Linux Mint 19.x, Windows should work as well)
+
+## Installation
+
+### JDK
+Install Java JDK with Compiler and JavaDoc.
+
+```
+devadmin@mint-mate-193-x64:/usr/lib/jvm/default-java$ sudo apt install openjdk-11-jdk
+```
+
+### Maven
+
+First Download Maven **from https://maven.apache.org/download.cgi**.  Extract to a desired location. For this example Maven is copied to the user's **HOME** directory.
+
+```
+devadmin@mint-mate-193-x64:~$ cd Downloads
+devadmin@mint-mate-193-x64:~/Downloads$ ls
+apache-maven-3.6.3-bin.tar.gz
+devadmin@mint-mate-193-x64:~/Downloads$ tar -xvf apache-maven-3.6.3-bin.tar.gz 
+apache-maven-3.6.3/README.txt
+apache-maven-3.6.3/LICENSE
+apache-maven-3.6.3/NOTICE
+apache-maven-3.6.3/lib/
+...
+apache-maven-3.6.3/lib/maven-resolver-transport-wagon-1.4.1.jar
+apache-maven-3.6.3/lib/maven-slf4j-provider-3.6.3.jar
+apache-maven-3.6.3/lib/jansi-1.17.1.jar
+devadmin@mint-mate-193-x64:~/Downloads$ 
+devadmin@mint-mate-193-x64:~/Downloads$ mv apache-maven-3.6.3 ~
+devadmin@mint-mate-193-x64:~/Downloads$ 
+```
+
+Update the environment and add Maven's binaries to the system **PATH**.
+
+```
+devadmin@mint-mate-193-x64:~$ cat .bash_profile 
+
+MVN_HOME=/home/devadmin/apache-maven-3.6.3
+PATH=$PATH:$MVN_HOME/bin
+
+export MVN_HOME PATH
+```
 
 ## Build
 

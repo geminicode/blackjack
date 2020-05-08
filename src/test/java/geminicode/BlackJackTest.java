@@ -12,4 +12,12 @@ public class BlackJackTest
 		BlackJack obj = new BlackJack();
 		assertNotNull(obj);
 	}
+	
+	@Test
+	public void logCheck()
+	{
+		BlackJack obj = new BlackJack();
+		assertNotNull(obj);
+		obj.log("Test Message");
+	}	
 }
