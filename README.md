@@ -14,7 +14,7 @@
 *  [Run](#run)
     *  [Startup](#startup)
     *  [Menu](#menu)
-    *  [Current Player])(current-player)
+    *  [Current Player](current-player)
     *  [Hit](#hit)
     *  [Busted](#busted)
     *  [Stand](#stand)
