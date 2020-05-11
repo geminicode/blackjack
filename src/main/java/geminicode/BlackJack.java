@@ -140,6 +140,18 @@ public class BlackJack {
 					}
 				}
 				playerStatus.put(winner, HandStatus.Winner);
+				
+				// check if two players are tied
+				if (!winner.equals(dealer))
+				{
+					for (Player p : this.players)
+					{
+						if (p.handTotal() == winner.handTotal())
+						{
+							playerStatus.put(p, HandStatus.Winner);
+						}
+					}					
+				}
 			}
 			
 			showPlayers(dealer);
