@@ -3,9 +3,12 @@ package geminicode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.ByteArrayInputStream;
+import java.io.PushbackInputStream;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
+import java.util.Scanner;
 
 /**
  * Simple game throwing next user exception
@@ -41,14 +44,18 @@ class BlackJackTestNoExceptionGame extends BlackJack
 
 	@Override
 	protected void play() throws RuntimeException {
+		showPlayers(players.get(0));
+		showMenu(players.get(0));
 	}
 
 	@Override
 	protected void showPlayers(Player currentPlayer) {
+		super.showPlayers(currentPlayer);
 	}
 
 	@Override
 	protected void showMenu(Player currentPlayer) {
+		super.showMenu(currentPlayer);
 	}
 }
 
@@ -102,6 +109,11 @@ class BlackJackTestOtherRuntimeExceptionGame extends BlackJack
 	
 }
 
+//class TestInputStream extends PushbackInputStream
+//{
+
+//}
+
 public class BlackJackTest 
 {
 	@Test
@@ -138,7 +150,7 @@ public class BlackJackTest
 	{
 		BlackJackTestNoExceptionGame obj = new BlackJackTestNoExceptionGame();
 		assertNotNull(obj);
-		obj.initGame(1);
+		obj.initGame(2);
 	}	
 	
 	@Test
@@ -149,4 +161,55 @@ public class BlackJackTest
 		obj.initGame(1);
 	}	
 	
+	@Test
+	public void initDealerBustedGame()
+	{
+		BlackJackTestDealerBustedGame obj = new BlackJackTestDealerBustedGame();
+		assertNotNull(obj);
+		obj.initGame(1);
+	}	
+	
+	@Test
+	public void playQuitCommandCheck()
+	{
+	
+		byte playback[] = {'Q'};
+		PushbackInputStream pbis = new PushbackInputStream(new ByteArrayInputStream(playback));
+		Scanner scanner = new Scanner(pbis);
+		BlackJack game = new BlackJack(scanner);
+		game.initGame(2);
+	}
+
+	@Test
+	public void playHitCommandCheck()
+	{
+	
+		byte playback[] = {'H'};
+		PushbackInputStream pbis = new PushbackInputStream(new ByteArrayInputStream(playback));
+		Scanner scanner = new Scanner(pbis);
+		BlackJack game = new BlackJack(scanner);
+		game.initGame(2);
+	}
+
+	@Test
+	public void playStayCommandCheck()
+	{
+	
+		byte playback[] = {'S'};
+		PushbackInputStream pbis = new PushbackInputStream(new ByteArrayInputStream(playback));
+		Scanner scanner = new Scanner(pbis);
+		BlackJack game = new BlackJack(scanner);
+		game.initGame(2);
+	}
+
+	@Test
+	public void playInvalidCommandCheck()
+	{
+	
+		byte playback[] = {'I'};
+		PushbackInputStream pbis = new PushbackInputStream(new ByteArrayInputStream(playback));
+		Scanner scanner = new Scanner(pbis);
+		BlackJack game = new BlackJack(scanner);
+		game.initGame(2);
+	}
 }

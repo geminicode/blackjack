@@ -23,7 +23,7 @@
 
 ## Overview
 
-A simple Blackjack game implemented in Java.  
+A simple Blackjack game implemented in Java.  One of the design goals for this implementation is to limit 3rd party libraries and utilize only the JDK.
 
 ## Requirements
 
