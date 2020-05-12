@@ -12,6 +12,7 @@
     *  [Install](#install)
     *  [Site](#site)
 *  [Run](#run)
+    *  [Windows](#windows)
     *  [Startup](#startup)
     *  [Menu](#menu)
     *  [Current Player](current-player)
