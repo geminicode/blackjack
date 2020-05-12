@@ -68,7 +68,7 @@ class BlackJackTestDealerBustedGame extends BlackJack
 		{
 			if (p.getName().equals(DEALER_NAME))
 			{
-				while(p.handTotal() < 21)
+				while(p.getHandTotal() < 21)
 				{
 					dealCard(p);
 				}

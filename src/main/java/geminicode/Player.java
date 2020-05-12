@@ -23,20 +23,21 @@ public class Player {
 		this.name = name;
 	}
 	
-	/*
+	/**
 	 * Deal a single card to the Player
+	 * @param card given to the player
 	 */
 	public int hit(Card card)
 	{
 		hand.add(card);
-		return handTotal();
+		return getHandTotal();
 	}
 	
 	/**
 	 * The numerical, face value of the player's hand.
 	 * @return the hand total
 	 */
-	public int handTotal()
+	public int getHandTotal()
 	{
 		int total = 0;
 		for (Card c : hand)
@@ -54,9 +55,13 @@ public class Player {
 		return name;
 	}
 
-	public String showHand()
+	/**
+	 * Create a string buffer of the user's name, hand total and cards in hand. 
+	 * @return String display of player's hand
+	 */
+	public String getHand()
 	{
-		StringBuffer buffer = new StringBuffer(String.format("%s:[%d]  ", getName(), handTotal() ));
+		StringBuffer buffer = new StringBuffer(String.format("%s:[%d]  ", getName(), getHandTotal() ));
 		
 		for (Card c : hand)
 		{
@@ -66,6 +71,10 @@ public class Player {
 		return buffer.toString();
 	}
 	
+	/**
+	 * Compare this Player to another
+	 * @param obj other Player
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) 
@@ -79,11 +88,17 @@ public class Player {
 		return this.getName().equals(other.getName());
 	}
 
+	/**
+	 * Player's hashcode
+	 */
 	@Override
 	public int hashCode() {
 		return name.hashCode();
 	}
 
+	/**
+	 * String representation of a player.
+	 */
 	@Override
 	public String toString() {
 		return String.format("%s", getName());

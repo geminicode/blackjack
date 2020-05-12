@@ -31,17 +31,25 @@ enum HandStatus {
  */
 public class BlackJack {
 
+	/** Take input from players */
  	private Scanner in;
+	/** Deck of Cards  */
 	private Deck deck = null;
 	
+	/** Players in the game  */
 	protected List<Player> players = new ArrayList<Player>();
+	/** Status of Players in the game  */
 	protected Map<Player, HandStatus> playerStatus = new HashMap<Player, HandStatus>();
 	
 	// Commands
+	/** Quit Key Command  */
 	private static final char CMD_QUIT = 'Q';
+	/** Hit Key Command  */
 	private static final char CMD_HIT = 'H';
+	/** Stand Key Command  */
 	private static final char CMD_STAND = 'S';
 	
+	/** Dealer's name  */
 	protected static final String DEALER_NAME = "Dealer";
 	
 	/**
@@ -54,7 +62,7 @@ public class BlackJack {
 	
 	/**
 	 * Create a BlackJack object using passed in input Scanner
-	 * @param input
+	 * @param input scanner for player input.
 	 */
 	public BlackJack(Scanner input)
 	{
@@ -83,9 +91,9 @@ public class BlackJack {
 			player.hit(deck.deal());
 		}
 		
-		if (player.handTotal() >= 21)
+		if (player.getHandTotal() >= 21)
 		{
-			if (player.handTotal() == 21)
+			if (player.getHandTotal() == 21)
 				playerStatus.put(player, HandStatus.BlackJack);
 			else
 				playerStatus.put(player, HandStatus.Busted);
@@ -130,11 +138,11 @@ public class BlackJack {
 			else
 			{
 				// Default winner to Dealer since he gets the "push", but he can't be busted.
-				int wintotal = (playerStatus.get(dealer) != HandStatus.Busted)?dealer.handTotal():0;
+				int wintotal = (playerStatus.get(dealer) != HandStatus.Busted)?dealer.getHandTotal():0;
 				Player winner = dealer;
 				for (Player p : this.players)
 				{
-					if (p.handTotal() > wintotal && playerStatus.get(p) != HandStatus.Busted)
+					if (p.getHandTotal() > wintotal && playerStatus.get(p) != HandStatus.Busted)
 					{
 						winner = p;
 					}
@@ -146,7 +154,7 @@ public class BlackJack {
 				{
 					for (Player p : this.players)
 					{
-						if (p.handTotal() == winner.handTotal())
+						if (p.getHandTotal() == winner.getHandTotal())
 						{
 							playerStatus.put(p, HandStatus.Winner);
 						}
@@ -181,7 +189,7 @@ public class BlackJack {
 			{
 			case CMD_HIT:
 				dealCard(player);
-				if (player.handTotal() >= 21)
+				if (player.getHandTotal() >= 21)
 				{
 					player = nextPlayer.next();
 				}
@@ -210,7 +218,7 @@ public class BlackJack {
 	{
 		for (Player p : players)
 		{
-			log(String.format("%s (%s) %s\n", (p.equals(currentPlayer))?"->":"..", playerStatus.get(p),  p.showHand()));
+			log(String.format("%s (%s) %s\n", (p.equals(currentPlayer))?"->":"..", playerStatus.get(p),  p.getHand()));
 		}
 	}
 	

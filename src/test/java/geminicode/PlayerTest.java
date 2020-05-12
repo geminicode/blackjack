@@ -61,13 +61,13 @@ public class PlayerTest {
 		Player player = new Player("Dealer");
 		Deck deck = new Deck();
 		
-		while (player.handTotal() <= 21)
+		while (player.getHandTotal() <= 21)
 		{
 			Card card = deck.deal();
 			player.hit(card);
 		}
-		String hand = player.showHand();
-		assertTrue(hand, player.handTotal() > 21);
+		String hand = player.getHand();
+		assertTrue(hand, player.getHandTotal() > 21);
 	}
 
 }

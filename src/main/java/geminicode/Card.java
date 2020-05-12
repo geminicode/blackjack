@@ -43,10 +43,18 @@ enum Face {
  */
 public class Card {
 
+	/** Card Suit (Hearts, Club, etc.. */
 	private Suit suit = Suit.Club;
+	/** Card Face (Two, Jack, Ace, etc) */
 	private Face face = Face.One;
+	/** Card Value (1-11 */
 	private int value = 0;
 	
+	/**
+	 * Create a single card with the supplied parameters
+	 * @param suit of card
+	 * @param face of card
+	 */
 	public Card(Suit suit, Face face)
 	{
 		this.suit = suit;
@@ -88,6 +96,10 @@ public class Card {
 		return face;
 	}
 
+	/**
+	 * Compare this card to another
+	 * @param obj other card
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) 
@@ -97,16 +109,22 @@ public class Card {
 			return false;
 		
 		Card other = (Card) obj;
-		
+		// Card is equal if Face and Suit match
 		return this.getFace().equals(other.getFace()) &&
 				this.getSuit().equals(other.getSuit());
 	}
 
+	/**
+	 * Card's hashcode
+	 */
 	@Override
 	public int hashCode() {
 		return this.suit.hashCode() +  this.face.hashCode();
 	}
 
+	/**
+	 * String representation of a card.
+	 */
 	@Override
 	public String toString() {
 		char s = '\u2663';
