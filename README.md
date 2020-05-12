@@ -303,6 +303,33 @@ The reports are created on the file system and can be found here:
 
 The following examples assume the user is in the blackjack's root repository directory.
 
+### Windows
+
+For MS Windows to display the UTF-8 character set, the console's code page needs to be changed.  The Windows Change Codepage program, **chcp**, can display and change the console's code page.  To display the proper game symbols, change the codepage to **65001** as such:
+
+```
+C:\dev\git\blackjack>chcp
+Active code page: 437
+
+C:\dev\git\blackjack>chcp 65001
+Active code page: 65001
+
+C:\dev\git\blackjack>java -jar -Dfile.encoding=UTF-8 target\blackjack-0.0.1-SNAPSHOT.jar
+Welcome to BlackJack!.  Let's Play a Game.
+  Five or less Players, NOT including the Dealer.
+How many players? 3
+Starting Game with 3 Players
+-> (Playing) Player#1:[20]  10♠: 10♣:
+.. (Playing) Player#2:[15]  10♥: 5♦:
+.. (Playing) Player#3:[10]  1♣: 9♠:
+.. (Playing) Dealer:[18]  11♦: 7♣:
+
+
+
+
+Player Player#1 Turn: [H]it [S]tand [Q]uit :
+```
+
 ### Startup
 
 The BlackJack software is started from the command line in a terminal window.  The Blackjack software is packaged as a **JAR** file and can be executed using the **java** command.
@@ -312,10 +339,10 @@ After starting the software, the user is prompted for the number of **players**.
 ```
 devadmin@mint-mate-193-x64:~/git/blackjack$ java -jar target/blackjack-0.0.1-SNAPSHOT.jar 
 Welcome to BlackJack!.  Let's Play a Game.
-  Five or less Players, NOT includeing the Dealer.
+  Five or less Players, NOT including the Dealer.
 How many players? 3
 Starting Game with 3 Players
--> (Playing) Player#1:[4]  1♠: 3♢: 
+-> (Playing) Player#1:[4]  1♠: 3♦: 
 .. (Playing) Player#2:[13]  2♥: 11♣: 
 .. (Playing) Player#3:[15]  11♠: 4♠: 
 .. (Playing) Dealer:[13]  3♠: 10♥: 
@@ -345,7 +372,7 @@ Player Player#1 Turn: [H]it [S]tand [Q]uit :
 To the far left, the current player is identified with the **-&gt;** symbol.  Other players are identified with two periods **..**
 
 ```
--> (Playing) Player#1:[4]  1♠: 3♢: 
+-> (Playing) Player#1:[4]  1♠: 3♦: 
 .. (Playing) Player#2:[13]  2♥: 11♣: 
 .. (Playing) Player#3:[15]  11♠: 4♠: 
 .. (Playing) Dealer:[13]  3♠: 10♥: 
@@ -357,7 +384,7 @@ The **Hit** command will deal the current player a single card.  In the example 
 
 ```
 Player Player#1 Turn: [H]it [S]tand [Q]uit : h
--> (Playing) Player#1:[14]  1♠: 3♢: 10♥: 
+-> (Playing) Player#1:[14]  1♠: 3♦: 10♥: 
 .. (Playing) Player#2:[13]  2♥: 11♣: 
 .. (Playing) Player#3:[15]  11♠: 4♠: 
 .. (Playing) Dealer:[13]  3♠: 10♥: 
@@ -375,7 +402,7 @@ When a **Hit** command is issued, if the player's hand total exceeds 21, then th
 ```
 
 Player Player#1 Turn: [H]it [S]tand [Q]uit : h
--> (Playing) Player#1:[20]  1♠: 3♢: 10♥: 6♠: 
+-> (Playing) Player#1:[20]  1♠: 3♦: 10♥: 6♠: 
 .. (Playing) Player#2:[13]  2♥: 11♣: 
 .. (Playing) Player#3:[15]  11♠: 4♠: 
 .. (Playing) Dealer:[13]  3♠: 10♥: 
@@ -384,7 +411,7 @@ Player Player#1 Turn: [H]it [S]tand [Q]uit : h
 
 
 Player Player#1 Turn: [H]it [S]tand [Q]uit : h
-.. (Busted) Player#1:[30]  1♠: 3♢: 10♥: 6♠: 10♣: 
+.. (Busted) Player#1:[30]  1♠: 3♦: 10♥: 6♠: 10♣: 
 -> (Playing) Player#2:[13]  2♥: 11♣: 
 .. (Playing) Player#3:[15]  11♠: 4♠: 
 .. (Playing) Dealer:[13]  3♠: 10♥: 
@@ -401,7 +428,7 @@ If a player is satisfied with their hand they can choose to **Stand**.  This act
 
 ```
 Player Player#2 Turn: [H]it [S]tand [Q]uit : h
-.. (Busted) Player#1:[30]  1♠: 3♢: 10♥: 6♠: 10♣: 
+.. (Busted) Player#1:[30]  1♠: 3♦: 10♥: 6♠: 10♣: 
 -> (Playing) Player#2:[18]  2♥: 11♣: 5♣: 
 .. (Playing) Player#3:[15]  11♠: 4♠: 
 .. (Playing) Dealer:[13]  3♠: 10♥: 
@@ -410,7 +437,7 @@ Player Player#2 Turn: [H]it [S]tand [Q]uit : h
 
 
 Player Player#2 Turn: [H]it [S]tand [Q]uit : S
-.. (Busted) Player#1:[30]  1♠: 3♢: 10♥: 6♠: 10♣: 
+.. (Busted) Player#1:[30]  1♠: 3♦: 10♥: 6♠: 10♣: 
 .. (Standing) Player#2:[18]  2♥: 11♣: 5♣: 
 -> (Playing) Player#3:[15]  11♠: 4♠: 
 .. (Playing) Dealer:[13]  3♠: 10♥: 
@@ -427,7 +454,7 @@ At any point, a player can select to **Quit** the game.  The software will immed
 
 ```
 Player Player#2 Turn: [H]it [S]tand [Q]uit : S
-.. (Busted) Player#1:[30]  1♠: 3♢: 10♥: 6♠: 10♣: 
+.. (Busted) Player#1:[30]  1♠: 3♦: 10♥: 6♠: 10♣: 
 .. (Standing) Player#2:[18]  2♥: 11♣: 5♣: 
 -> (Playing) Player#3:[15]  11♠: 4♠: 
 .. (Playing) Dealer:[13]  3♠: 10♥: 
@@ -447,9 +474,9 @@ The game ends when the Dealer's turn is over.  In the event of a tie, even with 
 
 ```
 Player Dealer Turn: [H]it [S]tand [Q]uit : h
-.. (Busted) Player#1:[28]  8♠: 10♢: 10♣: 
-.. (Standing) Player#2:[20]  5♣: 6♥: 9♢: 
-.. (Standing) Player#3:[21]  10♣: 11♢: 
+.. (Busted) Player#1:[28]  8♠: 10♦: 10♣: 
+.. (Standing) Player#2:[20]  5♣: 6♥: 9♦: 
+.. (Standing) Player#3:[21]  10♣: 11♦: 
 -> (Winner) Dealer:[21]  11♠: 6♠: 4♠: 
 
 

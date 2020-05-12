@@ -247,7 +247,7 @@ public class BlackJack {
 	public static void main(String[] args)
 	{
 		Scanner in = new Scanner(System.in);
-		log("Welcome to BlackJack!.  Let's Play a Game.\n  Five or less Players, NOT includeing the Dealer.\n");
+		log("Welcome to BlackJack!.  Let's Play a Game.\n  Five or less Players, NOT including the Dealer.\n");
 		
 		while(true)
 		{

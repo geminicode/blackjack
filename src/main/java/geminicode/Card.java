@@ -9,7 +9,7 @@ enum Suit {
 	Club,  // '\u2663'
 	Spade, // '\u2660'
 	Heart, // '\u2665'
-	Diamond // '\u2662'
+	Diamond // '\u2666'
 }
 
 /**
@@ -137,7 +137,7 @@ public class Card {
 				s = '\u2665';
 				break;			
 			case Diamond:
-				s = '\u2662';
+				s = '\u2666';
 				break;
 			default:
 				break;				
